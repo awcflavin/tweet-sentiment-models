@@ -1,0 +1,1 @@
+{"start_time": "020524_200443", "end_time": "020524_200629", "model": "MLP", "train_losses": [0.7159, 0.6774], "train_accs": [0.6888, 0.7098], "val_losses": [0.7287, 0.6987], "val_accs": [0.6777, 0.6942], "initial_lr": 0.001, "min_lr": 0, "tokenizer": "CustomBPETokenizer", "remove_emojis": true, "batch_size": 64, "fine_tune_epochs": 0, "initial_lr_ft": 0, "min_lr_ft": 0}

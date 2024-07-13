@@ -1,0 +1,100 @@
+default: &DEFAULT
+  num_epochs: 1
+  batch_size: 64
+  data_dir: 'data'
+  # -1 indicates the entire dataset. if changed tokens must be recomputed so use_existing_tokenizer and use_exisitng_tokens must = False
+  # this prevents "peeking" at val and test sets. Also, --write_data True must be passed in the CLI, otherwise it will have no effect.
+  # would not recommend changing
+  num_samples: 500000
+  remove_emojis: True
+  add_special_tokens: False
+  use_existing_tokenizer: True # do not change this. 10k merges BPE Tokenizer is very computationally expensive to build.
+  use_existing_tokens: True
+
+MLP:
+  <<: *DEFAULT
+  model_module: MLP
+  model_name: MLP
+  save_dir: "saves/MLP"
+  log_dir: 'logs/MLP'
+  tokenizer: "CustomBPETokenizer"
+  num_epochs: 30
+  initial_lr: 0.001
+  min_lr: 0
+  block_size: 128
+
+MLPWithFastText:
+  <<: *DEFAULT
+  model_module: MLP
+  model_name: MLPWithFastText
+  save_dir: "saves/MLPWithFastText"
+  log_dir: 'logs/MLPWithFastText'
+  num_epochs: 30
+  initial_lr: 0.001
+  min_lr: 0
+  block_size: 128
+
+Encoder:
+  <<: *DEFAULT
+  model_module: transformers
+  model_name: Encoder
+  save_dir: "saves/Encoder"
+  log_dir: 'logs/Encoder'
+  tokenizer: "CustomBPETokenizer"
+  num_epochs: 30
+  initial_lr: 0.001
+  min_lr: 0
+  block_size: 128
+
+LSTM:
+  <<: *DEFAULT
+  model_module: LSTMs
+  model_name: LSTM
+  save_dir: "saves/LSTM"
+  log_dir: 'logs/LSTM'
+  tokenizer: "CustomBPETokenizer"
+  bidirectional: False
+  num_epochs: 30
+  initial_lr: 0.001
+  min_lr: 0
+
+LSTMWithWC:
+  <<: *DEFAULT
+  model_module: LSTMs
+  model_name: LSTMWithWC
+  save_dir: "saves/LSTMWithWC"
+  log_dir: 'logs/LSTMWithWC'
+  tokenizer: "CustomBPETokenizer"
+  bidirectional: False
+  num_epochs: 10
+  initial_lr: 0.001
+  min_lr: 0.0001
+
+BertFineTune:
+  <<: *DEFAULT
+  model_module: BertFineTune
+  model_name: BertFineTune
+  save_dir: "saves/BertFineTune"
+  log_dir: 'logs/BertFineTune'
+  tokenizer: "BertTokenizer"
+  num_epochs: 5
+  initial_lr: 0.001
+  min_lr: 0.001
+  use_existing_tokens: False
+  add_special_tokens: True
+  fine_tune_epochs: 5
+  initial_lr_ft: 0.00003
+  min_lr_ft: 0.00003
+
+Decoder:
+  <<: *DEFAULT
+  model_module: transformers
+  model_name: Decoder
+  save_dir: "saves/Decoder"
+  log_dir: 'logs/Decoder'
+  tokenizer: "CustomBPETokenizer"
+  add_special_tokens: True
+  num_epochs: 50
+  initial_lr: 0.0003
+  min_lr: 0
+  seq_len: 16
